@@ -1,0 +1,32 @@
+<% if notice %>
+  <div class="alert alert-success alert-dismissible show fade" role="alert">
+    &nbsp; <%= notice %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+<h1>Todo items</h1>
+<br>
+<div class="row card-group row-cols-2 row-cols-md-3 g-4">
+  <% @todos.each do |todo| %>
+    <% if todo.user == current_user %>
+      <div class="col">
+        <div class="card h-100" style="background-color: <% if todo.completed %> #e3e3e3 <% else %> none <% end %>"><span>&nbsp; <%= link_to todo, method: :delete, data: { confirm: 'Are you sure you want to delete this todo item?' } do %> <span aria-hidden="true">&times;</span> <% end %></span>
+          <div class="card-body">
+            <h5 class="card-title"><% if todo.completed %>
+                <del><%= todo.title %></del>
+              <% else %>
+                <%= todo.title %>
+              <% end %></h5>
+            <p class="card-text"><%= todo.description %></p>
+          </div>
+          <span style="display: flex; justify-content: space-between; margin: 0 10px;"><%= link_to 'Edit', edit_todo_path(todo), { :style=>'all: revert; text-decoration: underline;'} %> <%= form_with(model: todo) do |form| %><%= form.check_box :completed, :class => 'form-check-input', :onclick => 'this.form.submit();' %><% end %></span>
+          <div class="card-footer">
+            <small class="text-muted">Updated <%= time_ago_in_words(todo.updated_at) %> ago</small>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+<br/>
+<%= link_to 'Add a new Todo', new_todo_path, class: "btn btn-secondary text-light" %>

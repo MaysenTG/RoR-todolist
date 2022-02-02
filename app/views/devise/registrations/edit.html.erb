@@ -1,0 +1,54 @@
+<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+  <div class="mb-3">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", :class => 'form-control' %>
+  </div>
+  
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+  
+  <div class="mb-3">
+    <%= f.label "New password" %> <em>(leave blank if you don't want to change it)</em><br />
+    <%= f.password_field :password, autocomplete: "new-password", :class => 'form-control' %>
+    <% if @minimum_password_length %>
+      <em><%= @minimum_password_length %> characters minimum</em>
+    <% end %>
+  </div>
+  
+  <div class="mb-3">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", :class => 'form-control' %>
+  </div>
+  
+  <div class="mb-3">
+    <%= f.label :current_password %> <em>(we need your current password to confirm your changes)</em><br />
+    <%= f.password_field :current_password, autocomplete: "current-password", :class => 'form-control' %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit "Update" %>
+  </div>
+  
+<% end %>
+
+
+<p>
+  <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Want to cancel your account?
+  </button>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Cancel my account</h5>
+        <p class="card-text">Click the button below to cancel your account. Note that all todo items connected to your account will be deleted permanently.</p>
+        <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-danger" %>
+      </div>
+    </div>
+  </div>
+</div>
+<%= link_to "Back", :back %>
