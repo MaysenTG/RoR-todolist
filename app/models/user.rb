@@ -5,4 +5,12 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
          
   has_many :todos
+  
+  after_destroy :destroy_coupon_codes
+
+   private
+
+   def destroy_coupon_codes
+     self.todos.destroy_all
+   end
 end
