@@ -16,7 +16,7 @@ class TodosController < ApplicationController
   end
   
   def search
-    @customtodos = Todo.where("title LIKE ? OR description LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%")
+    @customtodos = Todo.where("lower(title) LIKE ? OR lower(description) LIKE ?", "%#{params[:q].downcase}%", "%#{params[:q].downcase}%")
     @query = params[:q].to_s
   end
   
@@ -33,6 +33,7 @@ class TodosController < ApplicationController
 
   # GET /todos/1/edit
   def edit
+    redirect_to :back
   end
 
   # POST /todos or /todos.json
@@ -99,6 +100,6 @@ class TodosController < ApplicationController
 
     # Only allow a list of trusted parameters through. Completed needs to default to false to be able to use the nav tabs on the index page
     def todo_params
-      params.require(:todo).permit(:title, :description, :completed, :user_id, :q).with_defaults(completed: false, q: "")
+      params.require(:todo).permit(:title, :description, :completed, :user_id).with_defaults(completed: false)
     end
 end
