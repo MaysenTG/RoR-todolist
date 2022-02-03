@@ -1,19 +1,12 @@
 ActiveAdmin.register Todo do
   
-  batch_action :completed do |ids|
-    batch_action_collection.find(ids).each do |todo|
-      todo.completed = true
+  batch_action :toggle_completed do |ids|
+    Todo.find(ids).each do |todo|
+      todo.update(completed: not(todo.completed))
     end
-    redirect_to collection_path, alert: "The posts have been completed."
+    redirect_to collection_path, alert: "The posts have been updated."
   end
   
-  
-  batch_action :notcompleted do |ids|
-    batch_action_collection.find(ids).each do |todo|
-      todo.completed = false
-    end
-    redirect_to collection_path, alert: "The posts have been unchecked."
-  end
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
   #

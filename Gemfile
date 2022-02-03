@@ -14,6 +14,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise', '~> 4.8', '>= 4.8.1'
 gem 'activeadmin'
 gem 'active_skin'
+gem 'bootstrap', '~> 5.1', '>= 5.1.3'
+gem 'arctic_admin'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
