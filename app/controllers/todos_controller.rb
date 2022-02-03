@@ -8,6 +8,8 @@ class TodosController < ApplicationController
   # GET /todos or /todos.json
   def index
     @todos = Todo.all.order(:completed)
+    @todoscompleted = Todo.where(completed: true).order(:completed)
+    @todostodo = Todo.where(completed: not(true)).order(:completed)
   end
 
   # GET /todos/1 or /todos/1.json
@@ -86,8 +88,8 @@ class TodosController < ApplicationController
       @todo = Todo.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
+    # Only allow a list of trusted parameters through. Completed needs to default to false to be able to use the nav tabs on the index page
     def todo_params
-      params.require(:todo).permit(:title, :description, :completed, :user_id)
+      params.require(:todo).permit(:title, :description, :completed, :user_id).with_defaults(completed: false)
     end
 end
