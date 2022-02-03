@@ -16,6 +16,7 @@ gem 'activeadmin'
 gem 'active_skin'
 gem 'bootstrap', '~> 5.1', '>= 5.1.3'
 gem 'arctic_admin'
+gem 'jquery-rails', '~> 4.4'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

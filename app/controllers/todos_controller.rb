@@ -10,7 +10,16 @@ class TodosController < ApplicationController
     @todos = Todo.all.order(:completed)
     @todoscompleted = Todo.where(completed: true).order(:completed)
     @todostodo = Todo.where(completed: not(true)).order(:completed)
+    
+    # @customtodos = Todo.where('title ~* ?', params[:search].to_s)
+    # @customtodos = Todo.where("title like ?", "%#{params[:search]}%")
   end
+  
+  def search
+    @customtodos = Todo.where("title LIKE ? OR description LIKE ?", "%#{params[:q]}%", "%#{params[:q]}%")
+    @query = params[:q].to_s
+  end
+  
 
   # GET /todos/1 or /todos/1.json
   def show
@@ -90,6 +99,6 @@ class TodosController < ApplicationController
 
     # Only allow a list of trusted parameters through. Completed needs to default to false to be able to use the nav tabs on the index page
     def todo_params
-      params.require(:todo).permit(:title, :description, :completed, :user_id).with_defaults(completed: false)
+      params.require(:todo).permit(:title, :description, :completed, :user_id, :q).with_defaults(completed: false, q: "")
     end
 end

@@ -288,6 +288,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   devise (~> 4.8, >= 4.8.1)
   jbuilder (~> 2.7)
+  jquery-rails (~> 4.4)
   listen (~> 3.3)
   pg (~> 1.1)
   puma (~> 5.0)
