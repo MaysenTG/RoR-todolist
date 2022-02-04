@@ -18,16 +18,32 @@
           </li>
         <% end %>
         <li><hr class="dropdown-divider"></li>
+        <% if action_name != "search" %>
+          <li>
+            <form class="d-flex" action="/search" id="live-search-form">
+              <input type="text" class="form-control me-2" name="q" placeholder="Search todos" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </li>
+        <% else %>
+        <% end %>
+        <li><hr class="dropdown-divider"></li>
       </ul>
-      
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <!-- User account -->
         <% if user_signed_in? %>
-          <li class="nav-item">
-            <%= link_to 'My account', edit_user_registration_path, class: 'nav-link' %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: 'nav-link' %>
+          <li class="dropstart">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              My account
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <%= link_to 'Edit profile', edit_user_registration_path, class: 'dropdown-item' %>
+              </li>
+              <li>
+                <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: 'dropdown-item' %>
+              </li>
+            </ul>
           </li>
         <% else %>
           <li class="nav-item">
@@ -38,12 +54,6 @@
           </li>
         <% end %>
       </ul>
-      
-      <form class="d-flex" action="/search" id="live-search-form">
-        <input type="text" class="form-control me-2" name="q" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-      
     </div>
   </div>
 </nav>

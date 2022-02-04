@@ -16,7 +16,7 @@ class TodosController < ApplicationController
   end
   
   def search
-    @customtodos = Todo.where("lower(title) LIKE ? OR lower(description) LIKE ?", "%#{params[:q].downcase}%", "%#{params[:q].downcase}%")
+    @customtodos = Todo.where("lower(title) LIKE ? OR lower(description) LIKE ?", "%#{params[:q].downcase}%", "%#{params[:q].downcase}%").order(:completed)
     @query = params[:q].to_s
   end
   
@@ -33,7 +33,6 @@ class TodosController < ApplicationController
 
   # GET /todos/1/edit
   def edit
-    redirect_to :back
   end
 
   # POST /todos or /todos.json
@@ -70,7 +69,7 @@ class TodosController < ApplicationController
     @todo.destroy
 
     respond_to do |format|
-      format.html { redirect_to todos_url, notice: "Todo was successfully destroyed." }
+      format.html { redirect_to todos_url, notice: "Todo was successfully deleted." }
       format.json { head :no_content }
     end
   end
@@ -98,7 +97,7 @@ class TodosController < ApplicationController
       @todo = Todo.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through. Completed needs to default to false to be able to use the nav tabs on the index page
+    # Only allow a list of trusted parameters through. Completed needs to default to false to be able to use the nav tabs on the index page properly
     def todo_params
       params.require(:todo).permit(:title, :description, :completed, :user_id).with_defaults(completed: false)
     end
